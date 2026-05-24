@@ -1,0 +1,28 @@
+# Configuración de despliegue para Render.com
+# Render lee este archivo automáticamente al conectar el repositorio.
+# Documentación: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: saludplus
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true   # Render genera una clave segura aleatoria
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: saludplus-db
+          property: connectionString
+
+databases:
+  - name: saludplus-db
+    databaseName: saludplus
+    user: saludplus
+    plan: free
+    postgresMajorVersion: 16

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block titulo %}Inicio - SaludPlus{% endblock %}
+{% block contenido %}
+<h2 class="mb-4">Panel principal</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card card-stat azul shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Pacientes registrados</h6>
+                <h3>{{ stats.pacientes }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-stat verde shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Médicos activos</h6>
+                <h3>{{ stats.medicos }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-stat amarillo shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Citas hoy</h6>
+                <h3>{{ stats.citas_hoy }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-stat rojo shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">Pendientes</h6>
+                <h3>{{ stats.citas_pendientes }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-calendar-event"></i> Próximas citas</h5>
+    </div>
+    <div class="card-body">
+        {% if citas %}
+        <table class="table table-hover">
+            <thead><tr>
+                <th>Fecha y hora</th>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Estado</th>
+            </tr></thead>
+            <tbody>
+            {% for c in citas %}
+                <tr>
+                    <td>{{ c.fecha_hora.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td>{{ c.paciente.nombre_completo }}</td>
+                    <td>{{ c.medico.nombre_completo }}</td>
+                    <td>
+                        <span class="badge bg-{{ 
+                            'success' if c.estado=='confirmada' else
+                            'warning' if c.estado=='pendiente' else
+                            'secondary' if c.estado=='realizada' else 'danger'
+                        }}">{{ c.estado }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted text-center my-3">No hay citas próximas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

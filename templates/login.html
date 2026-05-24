@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block titulo %}Iniciar sesión - SaludPlus{% endblock %}
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm mt-5">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <i class="bi bi-heart-pulse-fill text-primary" style="font-size: 3rem;"></i>
+                    <h3 class="mt-2">SaludPlus</h3>
+                    <p class="text-muted small">Sistema de Gestión de Reservas Médicas</p>
+                </div>
+                
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.usuario.label.text }}</label>
+                        {{ form.usuario(class="form-control", autofocus=true) }}
+                        {% for error in form.usuario.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.contrasena.label.text }}</label>
+                        {{ form.contrasena(class="form-control") }}
+                        {% for error in form.contrasena.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                    </button>
+                </form>
+                
+                <div class="mt-3 text-center text-muted small">
+                    Credenciales de prueba: <code>admin</code> / <code>Admin2024!</code>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

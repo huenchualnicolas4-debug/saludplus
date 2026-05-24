@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block titulo %}Error {{ codigo }} - SaludPlus{% endblock %}
+{% block contenido %}
+<div class="text-center py-5">
+    <h1 class="display-1 text-muted">{{ codigo }}</h1>
+    <p class="lead">{{ mensaje }}</p>
+    <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary">
+        <i class="bi bi-house"></i> Volver al inicio
+    </a>
+</div>
+{% endblock %}
