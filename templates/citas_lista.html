@@ -36,7 +36,7 @@
             <tbody>
             {% for c in citas %}
                 <tr>
-                    <td>{{ c.fecha_hora|local_datetime.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td>{% if c.fecha_hora %}{{ c.fecha_hora.strftime('%d/%m/%Y %H:%M') }}{% else %}—{% endif %}</td>
                     <td>{{ c.paciente.nombre_completo }}</td>
                     <td>{{ c.medico.nombre_completo }}</td>
                     <td>{{ c.motivo }}</td>
@@ -64,7 +64,7 @@
         {% else %}
         <p class="text-muted text-center my-3">No hay citas registradas.</p>
         {% endif %}
-        {% if pagination.pages > 1 %}
+        {% if pagination and pagination.pages > 1 %}
         <nav aria-label="Paginación citas" class="mt-3">
             <ul class="pagination justify-content-center">
                 {% if pagination.has_prev %}
